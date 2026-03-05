@@ -43,7 +43,10 @@ export const KeyboardShortcutsExtension = Extension.create<{
             const isParagraph =
               blockInfo.blockContent.node.type.name === "paragraph";
 
-            if (selectionAtBlockStart && !isParagraph) {
+            const isHeading =
+              blockInfo.blockContent.node.type.name === "heading";
+
+            if (selectionAtBlockStart && !isParagraph && !isHeading) {
               return commands.command(
                 updateBlockCommand(blockInfo.bnBlock.beforePos, {
                   type: "paragraph",
