@@ -38,6 +38,7 @@ export const KeyboardShortcutsExtension = Extension.create<{
         // Undoes an input rule if one was triggered in the last editor state change.
         () => commands.undoInputRule(),
         // Reverts block content type to a paragraph if the selection is at the start of the block.
+        // Headings are excluded as they should preserve their type on backspace.
         () =>
           commands.command(({ state }) => {
             const blockInfo = getBlockInfoFromSelection(state);
@@ -49,8 +50,10 @@ export const KeyboardShortcutsExtension = Extension.create<{
               state.selection.from === blockInfo.blockContent.beforePos + 1;
             const isParagraph =
               blockInfo.blockContent.node.type.name === "paragraph";
+            const isHeading =
+              blockInfo.blockContent.node.type.name === "heading";
 
-            if (selectionAtBlockStart && !isParagraph) {
+            if (selectionAtBlockStart && !isParagraph && !isHeading) {
               return commands.command(
                 updateBlockCommand(blockInfo.bnBlock.beforePos, {
                   type: "paragraph",

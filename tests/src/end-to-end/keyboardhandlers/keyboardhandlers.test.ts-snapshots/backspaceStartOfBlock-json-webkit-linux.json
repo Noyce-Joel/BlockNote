@@ -11,11 +11,12 @@
           },
           "content": [
             {
-              "type": "paragraph",
+              "type": "heading",
               "attrs": {
                 "backgroundColor": "default",
                 "textColor": "default",
-                "textAlignment": "left"
+                "textAlignment": "left",
+                "level": 1
               },
               "content": [
                 {
