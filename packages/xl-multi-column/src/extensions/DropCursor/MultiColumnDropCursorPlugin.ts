@@ -78,12 +78,10 @@ export function multiColumnDropCursor(
           return false;
         }
 
-        const draggedBlocks = [];
-        for (let i = 0; i < slice.content.childCount; i++) {
-          draggedBlocks.push(
-            nodeToBlock(slice.content.child(i), editor.pmSchema),
-          );
-        }
+        const draggedBlocks: ReturnType<typeof nodeToBlock>[] = [];
+        slice.content.forEach((node) => {
+          draggedBlocks.push(nodeToBlock(node, editor.pmSchema));
+        });
 
         // const block = blockInfo.block(editor);
         if (blockInfo.blockNoteType === "column") {
