@@ -70,6 +70,12 @@ export const uz: Dictionary = {
       ],
       group: "Kichik sarlavhalar",
     },
+    callout: {
+      title: "Callout",
+      subtext: "Highlight important information",
+      aliases: ["callout", "highlight", "notice", "info"],
+      group: "Asosiy bloklar",
+    },
     quote: {
       title: "Iqtibos",
       subtext: "Iqtibos yoki parcha",

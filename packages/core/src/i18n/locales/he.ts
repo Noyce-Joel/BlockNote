@@ -56,6 +56,12 @@ export const he: Dictionary = {
       aliases: ["h6", "heading6", "subheading"],
       group: "כותרות משנה",
     },
+    callout: {
+      title: "Callout",
+      subtext: "Highlight important information",
+      aliases: ["callout", "highlight", "notice", "info"],
+      group: "בלוקים בסיסיים",
+    },
     quote: {
       title: "ציטוט",
       subtext: "ציטוט או קטע",

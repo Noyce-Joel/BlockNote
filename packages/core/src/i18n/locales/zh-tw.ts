@@ -64,6 +64,12 @@ export const zhTW: Dictionary = {
       aliases: ["h3", "heading3", "subheading", "標題", "三級標題", "摺疊"],
       group: "副標題",
     },
+    callout: {
+      title: "Callout",
+      subtext: "Highlight important information",
+      aliases: ["callout", "highlight", "notice", "info"],
+      group: "基本區塊",
+    },
     quote: {
       title: "引用",
       subtext: "引用或摘錄",

@@ -277,6 +277,20 @@ export const docxBlockMappingForDefaultSchema: BlockMapping<
   table: (block, exporter) => {
     return Table(block.content, exporter);
   },
+  callout: (block, _exporter, _nestingLevel, _numberedListIndex, children) => {
+    return [
+      new Paragraph({
+        children: [new TextRun({ text: block.props.icon + " " })],
+        shading: {
+          type: ShadingType.SOLID,
+          color: "f0f0f0",
+        },
+      }),
+      ...((children || []).flatMap((child) =>
+        Array.isArray(child) ? child : [child],
+      ) as Paragraph[]),
+    ];
+  },
 };
 
 function file(

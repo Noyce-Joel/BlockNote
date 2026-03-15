@@ -56,6 +56,12 @@ export const ko: Dictionary = {
       aliases: ["h3", "제목3", "subheading", "접기", "토글"],
       group: "소제목",
     },
+    callout: {
+      title: "Callout",
+      subtext: "Highlight important information",
+      aliases: ["callout", "highlight", "notice", "info"],
+      group: "기본 블록",
+    },
     quote: {
       title: "인용",
       subtext: "인용문 또는 발췌",

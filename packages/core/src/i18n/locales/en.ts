@@ -54,6 +54,12 @@ export const en = {
       aliases: ["h3", "heading3", "subheading", "collapsable"],
       group: "Subheadings",
     },
+    callout: {
+      title: "Callout",
+      subtext: "Highlight important information",
+      aliases: ["callout", "highlight", "notice", "info"],
+      group: "Basic blocks",
+    },
     quote: {
       title: "Quote",
       subtext: "Quote or excerpt",

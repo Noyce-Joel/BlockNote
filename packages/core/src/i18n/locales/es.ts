@@ -56,6 +56,12 @@ export const es: Dictionary = {
       aliases: ["h3", "encabezado3", "subencabezado", "plegable", "contraible"],
       group: "Subencabezados",
     },
+    callout: {
+      title: "Callout",
+      subtext: "Highlight important information",
+      aliases: ["callout", "highlight", "notice", "info"],
+      group: "Bloques básicos",
+    },
     quote: {
       title: "Cita",
       subtext: "Cita o extracto",

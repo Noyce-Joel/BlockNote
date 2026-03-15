@@ -56,6 +56,12 @@ export const hr: Dictionary = {
       aliases: ["h3", "naslov3", "podnaslov", "proširivi"],
       group: "Podnaslovi",
     },
+    callout: {
+      title: "Callout",
+      subtext: "Highlight important information",
+      aliases: ["callout", "highlight", "notice", "info"],
+      group: "Osnovni blokovi",
+    },
     quote: {
       title: "Citat",
       subtext: "Citat ili izvadak",

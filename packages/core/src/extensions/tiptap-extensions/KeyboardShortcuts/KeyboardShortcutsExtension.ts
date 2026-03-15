@@ -314,7 +314,11 @@ export const KeyboardShortcutsExtension = Extension.create<{
                   "inline*" &&
                   bottomBlock.blockContent.node.childCount === 0);
 
-              if (prevBlockNotTableAndNoContent) {
+              const prevBlockHasChildren =
+                bottomBlock.childContainer &&
+                bottomBlock.childContainer.node.childCount > 0;
+
+              if (prevBlockNotTableAndNoContent && !prevBlockHasChildren) {
                 return chain()
                   .cut(
                     {

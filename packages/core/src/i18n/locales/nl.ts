@@ -57,6 +57,12 @@ export const nl: Dictionary = {
       aliases: ["h3", "kop3", "subkop", "uitklapbaar", "inklapbaar"],
       group: "Subkoppen",
     },
+    callout: {
+      title: "Callout",
+      subtext: "Highlight important information",
+      aliases: ["callout", "highlight", "notice", "info"],
+      group: "Basisblokken",
+    },
     quote: {
       title: "Citaat",
       subtext: "Citaat of uittreksel",

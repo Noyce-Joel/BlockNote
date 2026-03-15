@@ -54,6 +54,12 @@ export const fa = {
       aliases: ["عنوان۳ تاشو", "تیتر۳ تاشو"],
       group: "زیرعنوان‌ها",
     },
+    callout: {
+      title: "Callout",
+      subtext: "Highlight important information",
+      aliases: ["callout", "highlight", "notice", "info"],
+      group: "بلوک‌های پایه",
+    },
     quote: {
       title: "نقل قول",
       subtext: "نقل قول یا گزیده",

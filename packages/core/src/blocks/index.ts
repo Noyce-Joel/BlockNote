@@ -1,5 +1,6 @@
 export * from "./Audio/block.js";
 export * from "./Audio/parseAudioElement.js";
+export * from "./Callout/block.js";
 export * from "./Code/block.js";
 export * from "./Divider/block.js";
 export * from "./File/block.js";

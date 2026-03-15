@@ -109,6 +109,41 @@ export function getDefaultSlashMenuItems<
       });
   }
 
+  if (editorHasBlockWithType(editor, "callout")) {
+    items.push({
+      onItemClick: () => {
+        const currentBlock = editor.getTextCursorPosition().block;
+        const inserted = editor.insertBlocks(
+          [
+            {
+              type: "callout",
+              children: [{ type: "paragraph" as any }],
+            },
+          ],
+          currentBlock,
+          "after",
+        );
+
+        if (
+          Array.isArray(currentBlock.content) &&
+          ((currentBlock.content.length === 1 &&
+            isStyledTextInlineContent(currentBlock.content[0]) &&
+            currentBlock.content[0].type === "text" &&
+            currentBlock.content[0].text === "/") ||
+            currentBlock.content.length === 0)
+        ) {
+          editor.removeBlocks([currentBlock]);
+        }
+
+        if (inserted.length > 0 && inserted[0].children?.length) {
+          editor.setTextCursorPosition(inserted[0].children[0]);
+        }
+      },
+      key: "callout",
+      ...editor.dictionary.slash_menu.callout,
+    });
+  }
+
   if (editorHasBlockWithType(editor, "quote")) {
     items.push({
       onItemClick: () => {

@@ -72,6 +72,12 @@ export const ru: Dictionary = {
       ],
       group: "Подзаголовки",
     },
+    callout: {
+      title: "Callout",
+      subtext: "Highlight important information",
+      aliases: ["callout", "highlight", "notice", "info"],
+      group: "Базовые блоки",
+    },
     quote: {
       title: "Цитата",
       subtext: "Цитата или отрывок",

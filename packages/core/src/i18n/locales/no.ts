@@ -68,6 +68,12 @@ export const no: Dictionary = {
       ],
       group: "Underoverskrifter",
     },
+    callout: {
+      title: "Callout",
+      subtext: "Highlight important information",
+      aliases: ["callout", "highlight", "notice", "info"],
+      group: "Grunnleggende blokker",
+    },
     quote: {
       title: "Sitat",
       subtext: "Sitat eller utdrag",

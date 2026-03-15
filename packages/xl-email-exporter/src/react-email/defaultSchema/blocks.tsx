@@ -502,6 +502,25 @@ export const createReactEmailBlockMappingForDefaultSchema = (
       />
     );
   },
+  callout: (block, _t, _nestingLevel, _numberedListIndex, children) => {
+    return (
+      <div
+        style={{
+          display: "flex",
+          gap: "8px",
+          backgroundColor: "#f0f0f0",
+          borderRadius: "6px",
+          padding: "12px",
+          margin: "4px 0",
+        }}
+      >
+        <span style={{ fontSize: "1.5em", lineHeight: "1", flexShrink: 0 }}>
+          {block.props.icon}
+        </span>
+        <div style={{ flex: 1, minWidth: 0 }}>{children}</div>
+      </div>
+    );
+  },
 });
 
 // Export the original mapping for backward compatibility

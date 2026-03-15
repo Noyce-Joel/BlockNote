@@ -71,6 +71,12 @@ export const it: Dictionary = {
       ],
       group: "Sottotitoli",
     },
+    callout: {
+      title: "Callout",
+      subtext: "Highlight important information",
+      aliases: ["callout", "highlight", "notice", "info"],
+      group: "Blocchi Base",
+    },
     quote: {
       title: "Citazione",
       subtext: "Citazione o estratto",

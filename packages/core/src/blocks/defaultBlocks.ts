@@ -20,6 +20,7 @@ import {
 import {
   createAudioBlockSpec,
   createBulletListItemBlockSpec,
+  createCalloutBlockSpec,
   createCheckListItemBlockSpec,
   createCodeBlockSpec,
   createDividerBlockSpec,
@@ -38,6 +39,7 @@ import { createTableBlockSpec } from "./Table/block.js";
 export const defaultBlockSpecs = {
   audio: createAudioBlockSpec(),
   bulletListItem: createBulletListItemBlockSpec(),
+  callout: createCalloutBlockSpec(),
   checkListItem: createCheckListItemBlockSpec(),
   codeBlock: createCodeBlockSpec(),
   divider: createDividerBlockSpec(),

@@ -56,6 +56,12 @@ export const ar: Dictionary = {
       aliases: ["ع3", "عنوان3", "عنوان فرعي", "قابل للطي", "طي"],
       group: "العناوين الفرعية",
     },
+    callout: {
+      title: "Callout",
+      subtext: "Highlight important information",
+      aliases: ["callout", "highlight", "notice", "info"],
+      group: "الكتل الأساسية",
+    },
     quote: {
       title: "اقتباس",
       subtext: "اقتباس أو مقتطف",

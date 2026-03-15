@@ -68,6 +68,12 @@ export const de: Dictionary = {
       ],
       group: "Unterüberschriften",
     },
+    callout: {
+      title: "Callout",
+      subtext: "Highlight important information",
+      aliases: ["callout", "highlight", "notice", "info"],
+      group: "Grundlegende Blöcke",
+    },
     quote: {
       title: "Zitat",
       subtext: "Zitat oder Auszug",

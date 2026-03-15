@@ -707,6 +707,118 @@ NESTED BLOCKS
   padding-right: 0;
 }
 
+/*
+CALLOUT BLOCK
+The callout is a container block: the icon lives in .bn-block-content
+and children live in .bn-block-group. Flex lays them side-by-side with
+a tinted background.
+*/
+
+.bn-block:has(> .bn-block-content[data-content-type="callout"]) {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.65rem;
+  background-color: var(--bn-colors-hovered-background);
+  border-radius: var(--bn-border-radius-large, 8px);
+  padding: 1rem 0.75rem;
+  margin: 0.25rem 0;
+}
+
+.bn-block-content[data-content-type="callout"] {
+  width: auto;
+  max-width: none;
+  padding: 0;
+}
+
+.bn-block:has(> .bn-block-content[data-content-type="callout"])
+  > .bn-block-group {
+  flex: 1;
+  min-width: 0;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.bn-block:has(> .bn-block-content[data-content-type="callout"])
+  > .bn-block-group
+  > .bn-block-outer::before {
+  display: none;
+}
+
+.bn-block:has(> .bn-block-content[data-content-type="callout"])
+  .bn-block-content,
+.bn-block:has(> .bn-block-content[data-content-type="callout"])
+  .bn-inline-content {
+  background-color: transparent;
+}
+
+/* Callout icon */
+
+.bn-callout-icon {
+  position: relative;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.bn-callout-icon-button {
+  font-size: 1.5rem;
+  line-height: 1;
+  background: none;
+  border: 1px solid var(--bn-colors-border, #efefef);
+  border-radius: var(--bn-border-radius-small, 4px);
+  padding: 4px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.bn-callout-icon-button:hover {
+  opacity: 0.7;
+}
+
+/* Callout emoji picker */
+
+.bn-callout-emoji-picker {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10000;
+  margin-top: 4px;
+  background: var(--bn-colors-menu-background, #ffffff);
+  border: 1px solid var(--bn-colors-border, #efefef);
+  border-radius: var(--bn-border-radius-medium, 6px);
+  box-shadow: var(--bn-shadow-medium, 0 4px 12px rgba(0, 0, 0, 0.1));
+  padding: 8px;
+  width: 280px;
+}
+
+.bn-callout-emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 2px;
+}
+
+.bn-callout-emoji-option {
+  font-size: 1.25rem;
+  padding: 6px;
+  border: none;
+  background: none;
+  border-radius: var(--bn-border-radius-small, 4px);
+  cursor: pointer;
+  text-align: center;
+  line-height: 1;
+}
+
+.bn-callout-emoji-option:hover {
+  background: var(--bn-colors-hovered-background, #efefef);
+}
+
+/* Callout external HTML */
+
+.bn-callout-external-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
 .bn-thread-mark:not([data-orphan="true"]) {
   background: rgba(255, 200, 0, 0.15);
 }

@@ -56,6 +56,12 @@ export const uk: Dictionary = {
       aliases: ["h3", "heading3", "subheading", "заголовок3", "розгортаємий"],
       group: "Підзаголовки",
     },
+    callout: {
+      title: "Callout",
+      subtext: "Highlight important information",
+      aliases: ["callout", "highlight", "notice", "info"],
+      group: "Базові блоки",
+    },
     quote: {
       title: "Цитата",
       subtext: "Цитата або уривок",

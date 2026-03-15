@@ -248,6 +248,25 @@ export const pdfBlockMappingForDefaultSchema: BlockMapping<
       <Table data={block.content} transformer={t} key={"table" + block.id} />
     );
   },
+  callout: (block, _t, _nestingLevel, _numberedListIndex, children) => {
+    return (
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          gap: 6 * PIXELS_PER_POINT,
+          backgroundColor: "#f0f0f0",
+          borderRadius: 6 * PIXELS_PER_POINT,
+          padding: 10 * PIXELS_PER_POINT,
+          marginTop: 2 * PIXELS_PER_POINT,
+          marginBottom: 2 * PIXELS_PER_POINT,
+        }}
+      >
+        <Text style={{ fontSize: 18 }}>{block.props.icon}</Text>
+        <View style={{ flex: 1 }}>{children}</View>
+      </View>
+    );
+  },
 };
 
 function file(

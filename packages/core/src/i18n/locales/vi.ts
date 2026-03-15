@@ -56,6 +56,12 @@ export const vi: Dictionary = {
       aliases: ["h3", "tieude3", "tieudephu", "thugon"],
       group: "Tiêu đề phụ",
     },
+    callout: {
+      title: "Callout",
+      subtext: "Highlight important information",
+      aliases: ["callout", "highlight", "notice", "info"],
+      group: "Khối cơ bản",
+    },
     quote: {
       title: "Trích dẫn",
       subtext: "Trích dẫn hoặc đoạn trích",

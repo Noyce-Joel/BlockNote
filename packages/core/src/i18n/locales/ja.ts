@@ -70,6 +70,12 @@ export const ja: Dictionary = {
       ],
       group: "サブ見出し",
     },
+    callout: {
+      title: "Callout",
+      subtext: "Highlight important information",
+      aliases: ["callout", "highlight", "notice", "info"],
+      group: "基本ブロック",
+    },
     quote: {
       title: "引用",
       subtext: "引用または抜粋",

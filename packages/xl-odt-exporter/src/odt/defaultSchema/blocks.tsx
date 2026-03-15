@@ -581,4 +581,13 @@ export const odtBlockMappingForDefaultSchema: BlockMapping<
       )}
     </>
   ),
+
+  callout: (block, _exporter, _nestingLevel, _numberedListIndex, children) => (
+    <>
+      <text:p text:style-name="Standard">
+        {block.props.icon}
+      </text:p>
+      {children}
+    </>
+  ),
 };

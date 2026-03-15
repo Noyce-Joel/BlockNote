@@ -54,6 +54,12 @@ export const sk = {
       aliases: ["h3", "nadpis3", "podnadpis", "rozbaľovací"],
       group: "Podnáslovi",
     },
+    callout: {
+      title: "Callout",
+      subtext: "Highlight important information",
+      aliases: ["callout", "highlight", "notice", "info"],
+      group: "Základné bloky",
+    },
     quote: {
       title: "Citát",
       subtext: "Citát alebo výňatok",
