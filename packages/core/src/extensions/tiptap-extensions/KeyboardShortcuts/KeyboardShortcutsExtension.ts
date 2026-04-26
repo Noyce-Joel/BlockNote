@@ -856,18 +856,45 @@ export const KeyboardShortcutsExtension = Extension.create<{
         // Splits the current block, moving content inside that's after the cursor to a new text block below. Also
         // deletes the selection beforehand, if it's not empty.
         () =>
-          commands.command(({ state, chain }) => {
+          commands.command(({ state, dispatch, tr, chain }) => {
             const blockInfo = getBlockInfoFromSelection(state);
             if (!blockInfo.isBlockContainer) {
               return false;
             }
-            const { blockContent } = blockInfo;
+            const { bnBlock: blockContainer, blockContent } = blockInfo;
 
             const selectionAtBlockStart =
               state.selection.$anchor.parentOffset === 0;
+            const selectionEmpty =
+              state.selection.anchor === state.selection.head;
             const blockEmpty = blockContent.node.childCount === 0;
 
             if (!blockEmpty) {
+              if (selectionAtBlockStart && selectionEmpty) {
+                if (dispatch) {
+                  const newBlockInsertionPos = blockContainer.beforePos;
+                  const newBlockContentPos = newBlockInsertionPos + 2;
+                  const paragraph =
+                    state.schema.nodes["paragraph"].createAndFill();
+
+                  if (!paragraph) {
+                    return false;
+                  }
+
+                  const newBlock = state.schema.nodes[
+                    "blockContainer"
+                  ].createAndFill(undefined, [paragraph])!;
+
+                  tr.insert(newBlockInsertionPos, newBlock)
+                    .setSelection(
+                      TextSelection.create(tr.doc, newBlockContentPos),
+                    )
+                    .scrollIntoView();
+                }
+
+                return true;
+              }
+
               chain()
                 .deleteSelection()
                 .command(
