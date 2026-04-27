@@ -873,7 +873,6 @@ export const KeyboardShortcutsExtension = Extension.create<{
               if (selectionAtBlockStart && selectionEmpty) {
                 if (dispatch) {
                   const newBlockInsertionPos = blockContainer.beforePos;
-                  const newBlockContentPos = newBlockInsertionPos + 2;
                   const paragraph =
                     state.schema.nodes["paragraph"].createAndFill();
 
@@ -887,7 +886,10 @@ export const KeyboardShortcutsExtension = Extension.create<{
 
                   tr.insert(newBlockInsertionPos, newBlock)
                     .setSelection(
-                      TextSelection.create(tr.doc, newBlockContentPos),
+                      TextSelection.create(
+                        tr.doc,
+                        tr.mapping.map(state.selection.from),
+                      ),
                     )
                     .scrollIntoView();
                 }
