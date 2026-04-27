@@ -61,6 +61,84 @@ export const KeyboardShortcutsExtension = Extension.create<{
 
             return false;
           }),
+        // Deletes the current block if it's an empty block with inline content,
+        // and moves the selection to the previous block.
+        () =>
+          commands.command(({ state }) => {
+            const blockInfo = getBlockInfoFromSelection(state);
+            if (!blockInfo.isBlockContainer) {
+              return false;
+            }
+
+            const blockEmpty =
+              blockInfo.blockContent.node.childCount === 0 &&
+              blockInfo.blockContent.node.type.spec.content === "inline*";
+
+            if (blockEmpty) {
+              const prevBlockInfo = getPrevBlockInfo(
+                state.doc,
+                blockInfo.bnBlock.beforePos,
+              );
+
+              let targetBlockInfo = prevBlockInfo;
+              if (!targetBlockInfo || !targetBlockInfo.isBlockContainer) {
+                targetBlockInfo = getParentBlockInfo(
+                  state.doc,
+                  blockInfo.bnBlock.beforePos,
+                );
+              }
+
+              if (!targetBlockInfo || !targetBlockInfo.isBlockContainer) {
+                return false;
+              }
+
+              let chainedCommands = chain();
+
+              if (blockInfo.childContainer) {
+                chainedCommands.insertContentAt(
+                  blockInfo.bnBlock.afterPos,
+                  blockInfo.childContainer?.node.content,
+                );
+              }
+
+              if (
+                targetBlockInfo.blockContent.node.type.spec.content ===
+                "tableRow+"
+              ) {
+                const tableBlockEndPos = blockInfo.bnBlock.beforePos - 1;
+                const tableBlockContentEndPos = tableBlockEndPos - 1;
+                const lastRowEndPos = tableBlockContentEndPos - 1;
+                const lastCellEndPos = lastRowEndPos - 1;
+                const lastCellParagraphEndPos = lastCellEndPos - 1;
+
+                chainedCommands = chainedCommands.setTextSelection(
+                  lastCellParagraphEndPos,
+                );
+              } else if (
+                targetBlockInfo.blockContent.node.type.spec.content === ""
+              ) {
+                chainedCommands = chainedCommands.setNodeSelection(
+                  targetBlockInfo.blockContent.beforePos,
+                );
+              } else {
+                const blockContentStartPos =
+                  targetBlockInfo.blockContent.afterPos - 1;
+
+                chainedCommands =
+                  chainedCommands.setTextSelection(blockContentStartPos);
+              }
+
+              return chainedCommands
+                .deleteRange({
+                  from: blockInfo.bnBlock.beforePos,
+                  to: blockInfo.bnBlock.afterPos,
+                })
+                .scrollIntoView()
+                .run();
+            }
+
+            return false;
+          }),
         // Removes a level of nesting if the block is indented if the selection is at the start of the block.
         () =>
           commands.command(({ state }) => {
@@ -207,76 +285,6 @@ export const KeyboardShortcutsExtension = Extension.create<{
             }
 
             return true;
-          }),
-        // Deletes the current block if it's an empty block with inline content,
-        // and moves the selection to the previous block.
-        () =>
-          commands.command(({ state }) => {
-            const blockInfo = getBlockInfoFromSelection(state);
-            if (!blockInfo.isBlockContainer) {
-              return false;
-            }
-
-            const blockEmpty =
-              blockInfo.blockContent.node.childCount === 0 &&
-              blockInfo.blockContent.node.type.spec.content === "inline*";
-
-            if (blockEmpty) {
-              const prevBlockInfo = getPrevBlockInfo(
-                state.doc,
-                blockInfo.bnBlock.beforePos,
-              );
-              if (!prevBlockInfo || !prevBlockInfo.isBlockContainer) {
-                return false;
-              }
-
-              let chainedCommands = chain();
-
-              // Moves the children of the current block to the previous one.
-              if (blockInfo.childContainer) {
-                chainedCommands.insertContentAt(
-                  blockInfo.bnBlock.afterPos,
-                  blockInfo.childContainer?.node.content,
-                );
-              }
-
-              if (
-                prevBlockInfo.blockContent.node.type.spec.content ===
-                "tableRow+"
-              ) {
-                const tableBlockEndPos = blockInfo.bnBlock.beforePos - 1;
-                const tableBlockContentEndPos = tableBlockEndPos - 1;
-                const lastRowEndPos = tableBlockContentEndPos - 1;
-                const lastCellEndPos = lastRowEndPos - 1;
-                const lastCellParagraphEndPos = lastCellEndPos - 1;
-
-                chainedCommands = chainedCommands.setTextSelection(
-                  lastCellParagraphEndPos,
-                );
-              } else if (
-                prevBlockInfo.blockContent.node.type.spec.content === ""
-              ) {
-                chainedCommands = chainedCommands.setNodeSelection(
-                  prevBlockInfo.blockContent.beforePos,
-                );
-              } else {
-                const blockContentStartPos =
-                  prevBlockInfo.blockContent.afterPos - 1;
-
-                chainedCommands =
-                  chainedCommands.setTextSelection(blockContentStartPos);
-              }
-
-              return chainedCommands
-                .deleteRange({
-                  from: blockInfo.bnBlock.beforePos,
-                  to: blockInfo.bnBlock.afterPos,
-                })
-                .scrollIntoView()
-                .run();
-            }
-
-            return false;
           }),
         // Deletes previous block if it contains no content and isn't a table,
         // when the selection is empty and at the start of the block. Moves the
