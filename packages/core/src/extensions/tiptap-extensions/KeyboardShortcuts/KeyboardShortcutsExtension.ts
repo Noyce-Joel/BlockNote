@@ -92,6 +92,19 @@ export const KeyboardShortcutsExtension = Extension.create<{
                 return false;
               }
 
+              // When the target is a previous sibling with nested children,
+              // place the cursor at the deepest last child.
+              let cursorBlockInfo = targetBlockInfo;
+              if (prevBlockInfo && prevBlockInfo.isBlockContainer) {
+                const bottomBlock = getBottomNestedBlockInfo(
+                  state.doc,
+                  targetBlockInfo,
+                );
+                if (bottomBlock.isBlockContainer) {
+                  cursorBlockInfo = bottomBlock;
+                }
+              }
+
               let chainedCommands = chain();
 
               if (blockInfo.childContainer) {
@@ -102,7 +115,7 @@ export const KeyboardShortcutsExtension = Extension.create<{
               }
 
               if (
-                targetBlockInfo.blockContent.node.type.spec.content ===
+                cursorBlockInfo.blockContent.node.type.spec.content ===
                 "tableRow+"
               ) {
                 const tableBlockEndPos = blockInfo.bnBlock.beforePos - 1;
@@ -115,14 +128,14 @@ export const KeyboardShortcutsExtension = Extension.create<{
                   lastCellParagraphEndPos,
                 );
               } else if (
-                targetBlockInfo.blockContent.node.type.spec.content === ""
+                cursorBlockInfo.blockContent.node.type.spec.content === ""
               ) {
                 chainedCommands = chainedCommands.setNodeSelection(
-                  targetBlockInfo.blockContent.beforePos,
+                  cursorBlockInfo.blockContent.beforePos,
                 );
               } else {
                 const blockContentStartPos =
-                  targetBlockInfo.blockContent.afterPos - 1;
+                  cursorBlockInfo.blockContent.afterPos - 1;
 
                 chainedCommands =
                   chainedCommands.setTextSelection(blockContentStartPos);
