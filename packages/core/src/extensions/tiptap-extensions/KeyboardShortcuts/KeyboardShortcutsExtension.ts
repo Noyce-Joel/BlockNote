@@ -51,6 +51,30 @@ export const KeyboardShortcutsExtension = Extension.create<{
               blockInfo.blockContent.node.type.name === "paragraph";
 
             if (selectionAtBlockStart && !isParagraph) {
+              if (blockInfo.childContainer) {
+                let chainedCommands = chain();
+
+                if (blockInfo.childContainer.node.textContent.length > 0) {
+                  chainedCommands = chainedCommands.insertContentAt(
+                    blockInfo.bnBlock.afterPos,
+                    blockInfo.childContainer.node.content,
+                  );
+                }
+
+                return chainedCommands
+                  .deleteRange({
+                    from: blockInfo.childContainer.beforePos,
+                    to: blockInfo.childContainer.afterPos,
+                  })
+                  .command(
+                    updateBlockCommand(blockInfo.bnBlock.beforePos, {
+                      type: "paragraph",
+                      props: {},
+                    }),
+                  )
+                  .run();
+              }
+
               return commands.command(
                 updateBlockCommand(blockInfo.bnBlock.beforePos, {
                   type: "paragraph",
