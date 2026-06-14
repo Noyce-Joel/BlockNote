@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { getBlockInfoFromTransaction } from "../../../getBlockInfoFromPos.js";
 import { setupTestEnv } from "../../setupTestEnv.js";
-import { mergeBlocksCommand } from "./mergeBlocks.js";
+import { getParentBlockInfo, mergeBlocksCommand } from "./mergeBlocks.js";
 
 const getEditor = setupTestEnv();
 
@@ -129,5 +129,33 @@ describe("Test mergeBlocks", () => {
 
     expect(getEditor().document).toEqual(originalDocument);
     expect(ret).toBeFalsy();
+  });
+});
+
+describe("Test getParentBlockInfo", () => {
+  // Regression: backspacing the empty first block used to crash because
+  // `getParentBlockInfo` resolved a position before the top-level node
+  // ("There is no position before the top-level node"). It must instead honour
+  // its contract and return undefined when there is no parent block.
+  it("Returns undefined for a top-level block", () => {
+    getEditor().setTextCursorPosition("paragraph-0");
+
+    const beforePos = getPosBeforeSelectedBlock();
+    const parent = getEditor().transact((tr) =>
+      getParentBlockInfo(tr.doc, beforePos),
+    );
+
+    expect(parent).toBeUndefined();
+  });
+
+  it("Returns the parent for a nested block", () => {
+    getEditor().setTextCursorPosition("nested-paragraph-0");
+
+    const beforePos = getPosBeforeSelectedBlock();
+    const parent = getEditor().transact((tr) =>
+      getParentBlockInfo(tr.doc, beforePos),
+    );
+
+    expect(parent?.bnBlock.node.attrs.id).toBe("paragraph-with-children");
   });
 });

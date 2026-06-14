@@ -13,6 +13,13 @@ import {
 export const getParentBlockInfo = (doc: Node, beforePos: number): BlockInfo | undefined => {
   const $pos = doc.resolve(beforePos);
   const depth = $pos.depth - 1;
+  // At the top level there is no parent block; `$pos.before(0)` would throw
+  // ("There is no position before the top-level node"). Honour this function's
+  // documented contract and return undefined instead, so Backspace/Mod-Backspace
+  // on the empty first block is a safe no-op rather than a crash.
+  if (depth < 1) {
+    return undefined;
+  }
   const parentBeforePos = $pos.before(depth);
   const parentNode = doc.resolve(parentBeforePos).nodeAfter;
 
