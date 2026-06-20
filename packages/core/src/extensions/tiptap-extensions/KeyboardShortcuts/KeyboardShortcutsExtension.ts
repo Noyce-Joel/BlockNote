@@ -963,6 +963,27 @@ export const KeyboardShortcutsExtension = Extension.create<{
 
     return {
       Backspace: handleBackspace,
+      // ProseMirror/BlockNote bind Backspace but not Mod-Backspace, so
+      // Cmd/Ctrl+Backspace never reaches handleBackspace. At the very start of a
+      // block it should behave like Backspace (merge into / delete the previous
+      // block); anywhere else we return false so the browser performs its native
+      // "delete to start of line".
+      "Mod-Backspace": () => {
+        const { state } = this.editor;
+        const blockInfo = getBlockInfoFromSelection(state);
+        if (!blockInfo.isBlockContainer) {
+          return false;
+        }
+
+        const selectionAtBlockStart =
+          state.selection.empty &&
+          state.selection.from === blockInfo.blockContent.beforePos + 1;
+        if (!selectionAtBlockStart) {
+          return false;
+        }
+
+        return handleBackspace();
+      },
       Delete: handleDelete,
       Enter: () => handleEnter(),
       "Shift-Enter": () => handleEnter(true),
