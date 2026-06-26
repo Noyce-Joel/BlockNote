@@ -9,7 +9,7 @@ import { EditorState, Plugin } from "prosemirror-state";
 import { dropPoint } from "prosemirror-transform";
 import { EditorView } from "prosemirror-view";
 
-const PERCENTAGE_OF_BLOCK_WIDTH_CONSIDERED_SIDE_DROP = 0.1;
+const PERCENTAGE_OF_BLOCK_WIDTH_CONSIDERED_SIDE_DROP = 0.05;
 
 function eventCoords(event: MouseEvent) {
   return { left: event.clientX, top: event.clientY };
@@ -145,8 +145,8 @@ export function multiColumnDropCursor(
               id: UniqueID.options.generateID(),
             });
 
-          const blocksToRemove = draggedBlocks.filter(
-            (b) => editor.getBlock(b.id),
+          const blocksToRemove = draggedBlocks.filter((b) =>
+            editor.getBlock(b.id),
           );
           if (blocksToRemove.length > 0) {
             editor.removeBlocks(blocksToRemove);
@@ -168,8 +168,8 @@ export function multiColumnDropCursor(
             return;
           }
 
-          const blocksToRemove = filteredDraggedBlocks.filter(
-            (b) => editor.getBlock(b.id),
+          const blocksToRemove = filteredDraggedBlocks.filter((b) =>
+            editor.getBlock(b.id),
           );
           if (blocksToRemove.length > 0) {
             editor.removeBlocks(blocksToRemove);
